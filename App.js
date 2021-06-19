@@ -1,21 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+import UserListComponent from "./components/users-list/user-list.component";
+import {STATUSES} from "./utils/constants";
+import {Spinner} from "native-base";
+import {NavigationContainer} from "@react-navigation/native";
+import BottomNavigationComponent from "./components/bottom-navigation/bottom-navigation.component";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+	const [status, setStatus] = useState(STATUSES.IS_LOADING);
+	const Stack = createStackNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	useEffect(() => {
+		setTimeout(() => {
+			setStatus(STATUSES.LOGGED_IN)
+		}, 3000);
+	}, []);
+
+	const StackHistoryUsersListData = () => {
+		return (
+			<Stack.Navigator>
+				<Stack.Screen
+					name="usersList"
+					component={UserListComponent}
+					options={{
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
+					name="bottomNavigationContainer"
+					component={BottomNavigationComponent}
+					options={{
+						headerShown: true,
+						headerTitle: "User Details"
+					}}
+				/>
+			</Stack.Navigator>
+		);
+	};
+
+	return (
+		<>
+			{status === STATUSES.IS_LOADING ?
+				<Spinner color="blue"/> :
+				<NavigationContainer>
+					<StackHistoryUsersListData/>
+				</NavigationContainer>
+			}
+		</>
+	);
+};
