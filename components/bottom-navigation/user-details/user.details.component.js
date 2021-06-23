@@ -1,6 +1,19 @@
 import React from 'react';
 import {Container, Content} from "native-base";
 import {List} from 'react-native-paper';
+import {Text, View} from "react-native";
+
+const ACCORDIONS = {
+	personalInformation: 'PERSONAL_INFORMATION',
+	address: 'ADDRESS',
+	company: 'COMPANY'
+};
+
+const ICONS = {
+	company: "domain",
+	address: "home",
+	personalInformation: "card-account-details-outline"
+};
 
 const UserDetailsComponent = ({record}) => {
 	const [expanded, setExpanded] = React.useState({
@@ -17,25 +30,62 @@ const UserDetailsComponent = ({record}) => {
 		<>
 			<Container>
 				<Content>
-					<List.Section title="Accordions">
+					<List.Section title="User Information">
 						<List.Accordion
 							title="Personal Information"
-							left={(props) => <List.Icon {...props} icon="card-account-details-outline"/>}
-							expanded={expanded["personalInformation"]}
+							left={(props) => <List.Icon {...props} icon={ICONS["personalInformation"]}/>}
+							expanded={expanded[ACCORDIONS.personalInformation]}
 							onPress={() => {
-								handlePress("personalInformation")
+								handlePress(ACCORDIONS.personalInformation)
 							}}
 						>
-							{Object.keys(record).filter(key => key !== "company" && key !== "address").map(key => {
+							{Object.keys(record).map((key, index) => {
 								return (
-									<>
-										<List.Item title="fuck you">
-
-										</List.Item>
+									(key !== "company" && key !== "address") && <>
+										<List.Item key={index} title={
+											<>
+												<Text style={{marginRight: 10}}>{key[0].toUpperCase() + key.substr(1)}</Text>
+												<Text style={{marginLeft: 10}}>{record[key]}</Text>
+											</>
+										}
+										/>
 									</>
 								);
 							})}
 						</List.Accordion>
+						{Object.keys(record).map((key, index) => {
+							return (
+								(key === "company" || key === "address") && <>
+									<List.Accordion
+										key={index}
+										title={key[0].toUpperCase() + key.substring(1)}
+										left={(props) => <List.Icon {...props} icon={ICONS[key]}/>}
+										expanded={expanded[ACCORDIONS[key]]}
+										onPress={() => {
+											handlePress(ACCORDIONS[key])
+										}}
+									>
+										{Object.keys(record[key]).map((subKey, subIndex) => {
+											return (
+												subKey !== 'geo' && <List.Item key={subIndex} title={
+													<>
+														<View style={{margin: 10}}>
+															<Text style={{
+																fontWeight: "bold",
+																color: "black"
+															}}>{subKey[0].toUpperCase() + subKey.substr(1)}</Text>
+														</View>
+														<View style={{margin: 10}}>
+															<Text style={{color: "black"}}>{record[key][subKey]}</Text>
+														</View>
+													</>
+												}/>
+											);
+										})}
+									</List.Accordion>
+								</>
+							);
+						})}
 					</List.Section>
 				</Content>
 			</Container>

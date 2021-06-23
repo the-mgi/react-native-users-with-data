@@ -16,8 +16,8 @@ const BottomNavigationComponent = ({navigation, route}) => {
 	];
 
 	const renderScene = BottomNavigation.SceneMap({
-		userDetails: () => UserDetailsComponent({record: route.params}),
-		albums: AlbumsComponent,
+		userDetails: () => UserDetailsComponent({record: route.params.record}),
+		albums: () => AlbumsComponent({record: route.params.record}),
 		posts: PostsComponent,
 		todos: TodosComponent,
 	});
