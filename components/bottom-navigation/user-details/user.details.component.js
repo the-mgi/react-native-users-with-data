@@ -2,18 +2,7 @@ import React from 'react';
 import {Container, Content} from "native-base";
 import {List} from 'react-native-paper';
 import {Text, View} from "react-native";
-
-const ACCORDIONS = {
-	personalInformation: 'PERSONAL_INFORMATION',
-	address: 'ADDRESS',
-	company: 'COMPANY'
-};
-
-const ICONS = {
-	company: "domain",
-	address: "home",
-	personalInformation: "card-account-details-outline"
-};
+import {ACCORDIONS, ICONS} from "../../../utils/constants";
 
 const UserDetailsComponent = ({record}) => {
 	const [expanded, setExpanded] = React.useState({

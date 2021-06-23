@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Body, Card, CardItem, Container, Content, Header, Icon, Left, Right, Spinner, Text, Title} from "native-base";
 import * as Font from "expo-font";
 import {Ionicons} from "@expo/vector-icons";
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 
-const UserListComponent = ({navigation, route}) => {
+const UserListComponent = ({navigation}) => {
 	const [usersData, setUsersData] = useState([]);
 
 	useEffect(() => {
@@ -14,7 +14,7 @@ const UserListComponent = ({navigation, route}) => {
 				Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
 				...Ionicons.font,
 			});
-		})()
+		})();
 
 		fetch("https://jsonplaceholder.typicode.com/users")
 			.then(response => {
@@ -40,13 +40,15 @@ const UserListComponent = ({navigation, route}) => {
 				<Body>
 					<Title>Users Data</Title>
 				</Body>
-				<Right />
+				<Right/>
 			</Header>
 			<Content style={{marginHorizontal: 10}}>
 				{usersData.length > 0 ? (
 					usersData.map((user, index) => {
 						return (
-							<TouchableOpacity key={index} activeOpacity={1} onPress={() => {reactNavigate(user)}}>
+							<TouchableOpacity key={index} activeOpacity={1} onPress={() => {
+								reactNavigate(user)
+							}}>
 								<Card>
 									<CardItem>
 										<Icon name="ios-person-circle-outline"/>
