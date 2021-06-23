@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		borderWidth: 1,
 		backgroundColor: "#f5f5f5",
-		marginTop: 20,
+		marginVertical: 10,
 		marginHorizontal: 15,
 		borderColor: "royalblue"
 	},
 	text: {
-		fontSize: 18,
+		fontSize: 16,
 		fontFamily: "Roboto"
 	}
 });
