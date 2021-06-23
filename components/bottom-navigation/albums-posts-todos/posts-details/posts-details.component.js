@@ -1,7 +1,6 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {StyleSheet, Text, useWindowDimensions, View} from "react-native";
 
-const POSTS_BASE_URL = "https://jsonplaceholder.typicode.com/users/"
 const PostsDetailsComponent = ({navigation, route}) => {
 	const {dataObject} = route.params;
 	const {height} = useWindowDimensions();
